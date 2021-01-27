@@ -40,12 +40,15 @@
                                 </cells>
                             </collectionView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jRg-5t-9uN">
-                                <rect key="frame" x="0.0" y="327" width="401" height="134"/>
+                                <rect key="frame" x="0.0" y="382" width="401" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="J9i-Nw-jNe"/>
+                                </constraints>
                                 <attributedString key="attributedText">
-                                    <fragment content="12345">
+                                    <fragment content="0">
                                         <attributes>
-                                            <color key="NSColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <font key="NSFont" size="70" name="Osaka"/>
+                                            <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="80" name="Osaka"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="right" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -57,11 +60,10 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0Yy-bn-pyD" secondAttribute="bottom" id="39P-vb-5EX"/>
-                            <constraint firstItem="0Yy-bn-pyD" firstAttribute="top" secondItem="jRg-5t-9uN" secondAttribute="bottom" constant="1" id="FGB-5K-jFc"/>
-                            <constraint firstItem="jRg-5t-9uN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="KDd-Zf-zLH"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jRg-5t-9uN" secondAttribute="trailing" constant="13" id="Ln7-Fy-hv7"/>
+                            <constraint firstItem="0Yy-bn-pyD" firstAttribute="top" secondItem="jRg-5t-9uN" secondAttribute="bottom" id="Alb-4L-h56"/>
                             <constraint firstItem="0Yy-bn-pyD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="NoA-sk-1um"/>
-                            <constraint firstItem="jRg-5t-9uN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="283" id="ePp-rv-NH9"/>
+                            <constraint firstItem="jRg-5t-9uN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="b9S-zB-j0R"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jRg-5t-9uN" secondAttribute="trailing" constant="13" id="pVy-YE-CKR"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0Yy-bn-pyD" secondAttribute="trailing" id="wED-mq-Hix"/>
                         </constraints>
                     </view>
@@ -73,7 +75,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-246.15384615384613" y="645.4976303317535"/>
+            <point key="canvasLocation" x="-335" y="-10"/>
         </scene>
     </scenes>
 </document>
