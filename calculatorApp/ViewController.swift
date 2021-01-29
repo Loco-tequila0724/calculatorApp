@@ -101,22 +101,24 @@ extension  ViewController:  UICollectionViewDelegate, UICollectionViewDataSource
         let number = numbers[indexPath.section][indexPath.row]
 
         switch calculateStatus {
+
         case .none:
             switch number {
             case "0"..."9":
-                firstNumber += number
-                numberLabel.text = firstNumber
 
-            case ".":
-                if firstNumber.range(of: ".") != nil {
-                    return
-                } else if firstNumber.count == 0 {
+                if firstNumber.range(of: "0") != nil && firstNumber.count == 1 {
                     return
                 } else {
                     firstNumber += number
                     numberLabel.text = firstNumber
                 }
 
+            case ".":
+
+                if !confirmIncludeDecimalPoint(numberString: firstNumber) {
+                    firstNumber += number
+                    numberLabel.text = firstNumber
+                }
 
             case "+":
                 calculateStatus = .plus
@@ -134,27 +136,52 @@ extension  ViewController:  UICollectionViewDelegate, UICollectionViewDataSource
 
         case .plus, .minus, .multiplication, .division:
             switch number {
-            case "0"..."9",".":
-                secondNumber += number
-                numberLabel.text = secondNumber
+            case "0"..."9":
+
+                if secondNumber.range(of: "0") != nil && secondNumber.count == 1 {
+                    return
+
+                }   else {
+                    secondNumber += number
+                    numberLabel.text = secondNumber
+                }
+
+            case ".":
+                if !confirmIncludeDecimalPoint(numberString: secondNumber){
+                    secondNumber += number
+                    numberLabel.text = secondNumber
+                }
+
             case "=":
 
                 let firstNum = Double(firstNumber) ?? 0
                 let secondNum = Double(secondNumber) ?? 0
 
+                var resultString : String?
                 switch calculateStatus {
-
                 case .plus:
-                    numberLabel.text = String(firstNum + secondNum)
+                    resultString = String(firstNum + secondNum)
                 case .minus:
-                    numberLabel.text = String(firstNum - secondNum)
+                    resultString = String(firstNum - secondNum)
                 case .multiplication:
-                    numberLabel.text = String(firstNum * secondNum)
+                    resultString = String(firstNum * secondNum)
                 case .division:
-                    numberLabel.text = String(firstNum / secondNum)
+                    resultString = String(firstNum / secondNum)
                 default:
                     break
                 }
+
+                if let result = resultString, result.hasSuffix(".0") {
+                    resultString = result.replacingOccurrences(of: ".0", with: "")
+                }
+
+                numberLabel.text = resultString
+
+                firstNumber = ""
+                secondNumber = ""
+                firstNumber += resultString ?? ""
+
+
 
             case "AC":
                 clear()
@@ -163,9 +190,30 @@ extension  ViewController:  UICollectionViewDelegate, UICollectionViewDataSource
             }
         }
     }
+
+
+
+
+    private func confirmIncludeDecimalPoint(numberString: String) -> Bool {
+        if numberString.range(of:".") != nil || numberString.count == 0 {
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
 class CalculatorViewCell: UICollectionViewCell {
+
+    override var isHighlighted: Bool {
+        didSet {
+            if isHighlighted {
+                self.numberLabel.alpha = 0.3
+            } else {
+                self.numberLabel.alpha = 1
+            }
+        }
+ }
 
     let numberLabel: UILabel = {
         let label = UILabel()
@@ -189,6 +237,3 @@ class CalculatorViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
-
-
-
