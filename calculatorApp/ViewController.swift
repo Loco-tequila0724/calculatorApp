@@ -25,16 +25,25 @@ class ViewController: UIViewController {
         ["0",".","=",],
     ]
 
+    let cellId = "cellId"
+
     @IBOutlet weak var calculatorCollectionView: UICollectionView!
     @IBOutlet weak var calculatorHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var numberLabel: UILabel!
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        setViews()
+    }
+
+
+
+    func setViews() {
         calculatorCollectionView.delegate = self
         calculatorCollectionView.dataSource = self
-        calculatorCollectionView.register(CalculatorViewCell.self, forCellWithReuseIdentifier: "cellId")
+        calculatorCollectionView.register(CalculatorViewCell.self, forCellWithReuseIdentifier: cellId)
         calculatorHeightConstraint.constant = view.frame.width * 1.4
         calculatorCollectionView.backgroundColor = .clear
         calculatorCollectionView.contentInset = .init(top: 0, left: 14, bottom: 0, right: 14)
@@ -98,7 +107,6 @@ extension  ViewController:  UICollectionViewDelegate, UICollectionViewDataSource
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
         //数字や記号を入れる
 
         let number = numbers[indexPath.section][indexPath.row]
@@ -106,44 +114,10 @@ extension  ViewController:  UICollectionViewDelegate, UICollectionViewDataSource
         switch calculateStatus {
 
         case .none:
-            switch number {
-            case "0"..."9":
-//数字を押したら、その数字が表示される
-                if firstNumber.range(of: "0") != nil && firstNumber.count == 1 {
-                    return
-                } else {
-                    firstNumber += number
-                    numberLabel.text = firstNumber
-                }
-//点が押してあったら、連続で次は押せない。　カウント０の時は押せない（最初に押せない）
-            case ".":
-                //                if firstNumber.range(of: ".") != nil || firstNumber.count == 0 {
-                //                    return
-                //                } else {
-                //                    firstNumber += number
-                //                    numberLabel.text = firstNumber
-                //                }
 
-                if !confirmIncludeDecimalPoint(numberString: firstNumber) {
-                    firstNumber += number
-                    numberLabel.text = firstNumber
-                }
-//記号を押すと、演算子を代入
-            case "+":
-                calculateStatus = .plus
-            case "-":
-                calculateStatus = .minus
-            case "x":
-                calculateStatus = .multiplication
-            case "÷":
-                calculateStatus = .division
-            case "AC":
-                clear()
-            default:
-                break
-            }
+            handleNumberSelected(number: number)
 
-//数字を押した、その後
+//MARK: -数字を押した、その後
         case .plus, .minus, .multiplication, .division:
             switch number {
             case "0"..."9":
@@ -166,39 +140,7 @@ extension  ViewController:  UICollectionViewDelegate, UICollectionViewDataSource
 
 //イコールを押すと、計算して和を出す
             case "=":
-//
-                let firstNum = Double(firstNumber) ?? 0
-                let secondNum = Double(secondNumber) ?? 0
-
-                var resultString : String?
-
-
-                switch calculateStatus {
-
-                case .plus:
-                    resultString = String(firstNum + secondNum)
-                case .minus:
-                    resultString = String(firstNum - secondNum)
-                case .multiplication:
-                    resultString = String(firstNum * secondNum)
-                case .division:
-                    resultString = String(firstNum / secondNum)
-                default:
-                    break
-                }
-
-                if let result = resultString, result.hasSuffix(".0") {
-                    resultString = result.replacingOccurrences(of: ".0", with: "")
-                }
-
-                numberLabel.text = resultString
-
-                firstNumber = ""
-                secondNumber = ""
-
-                firstNumber += resultString ?? ""
-                calculateStatus = .none
-
+                calculateResultNumber()
 
              case "AC":
                 clear()
@@ -208,46 +150,86 @@ extension  ViewController:  UICollectionViewDelegate, UICollectionViewDataSource
         }
     }
 
+    private func handleNumberSelected (number:String){
+        switch number {
+        case "0"..."9":
+            //数字を押したら、その数字が表示される
+            if firstNumber.range(of: "0") != nil && firstNumber.count == 1 {
+                return
+            } else {
+                firstNumber += number
+                numberLabel.text = firstNumber
+            }
+        //点が押してあったら、連続で次は押せない。　カウント０の時は押せない（最初に押せない）
+        case ".":
+            //                if firstNumber.range(of: ".") != nil || firstNumber.count == 0 {
+            //                    return
+            //                } else {
+            //                    firstNumber += number
+            //                    numberLabel.text = firstNumber
+            //                }
+
+            if !confirmIncludeDecimalPoint(numberString: firstNumber) {
+                firstNumber += number
+                numberLabel.text = firstNumber
+            }
+        //記号を押すと、演算子を代入
+        case "+":
+            calculateStatus = .plus
+        case "-":
+            calculateStatus = .minus
+        case "x":
+            calculateStatus = .multiplication
+        case "÷":
+            calculateStatus = .division
+        case "AC":
+            clear()
+        default:
+            break
+        }
+    }
+
+    private func calculateResultNumber() {
+
+        let firstNum = Double(firstNumber) ?? 0
+        let secondNum = Double(secondNumber) ?? 0
+
+        var resultString : String?
+
+
+        switch calculateStatus {
+
+        case .plus:
+            resultString = String(firstNum + secondNum)
+        case .minus:
+            resultString = String(firstNum - secondNum)
+        case .multiplication:
+            resultString = String(firstNum * secondNum)
+        case .division:
+            resultString = String(firstNum / secondNum)
+        default:
+            break
+        }
+
+        if let result = resultString, result.hasSuffix(".0") {
+            resultString = result.replacingOccurrences(of: ".0", with: "")
+        }
+
+        numberLabel.text = resultString
+
+        firstNumber = ""
+        secondNumber = ""
+
+        firstNumber += resultString ?? ""
+        calculateStatus = .none
+
+    }
+
     private func confirmIncludeDecimalPoint(numberString: String) -> Bool {
         if numberString.range(of:".") != nil || numberString.count == 0 {
             return true
         } else {
             return false
         }
-    }
-}
-
-class CalculatorViewCell: UICollectionViewCell {
-
-    override var isHighlighted: Bool {
-        didSet {
-            if isHighlighted {
-                self.numberLabel.alpha = 0.3
-            } else {
-                self.numberLabel.alpha = 1
-            }
-        }
-    }
-
-    let numberLabel: UILabel = {
-        let label = UILabel()
-        label.text = "1"
-        label.textColor = .white
-        label.textAlignment = .center
-        label.font = .boldSystemFont(ofSize: 32)
-        label.clipsToBounds = true
-        label.backgroundColor = .orange
-        return label
-    }()
-    override init(frame:CGRect) {
-        super.init(frame: frame)
-        addSubview(numberLabel)
-        //backgroundColor = .black
-        numberLabel.frame.size = self.frame.size
-        numberLabel.layer.cornerRadius = self.frame.height / 2
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

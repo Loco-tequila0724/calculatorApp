@@ -13,6 +13,7 @@
 		380BCF7025BF0BC30011E171 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 380BCF6E25BF0BC30011E171 /* Main.storyboard */; };
 		380BCF7225BF0BC50011E171 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 380BCF7125BF0BC50011E171 /* Assets.xcassets */; };
 		380BCF7525BF0BC50011E171 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 380BCF7325BF0BC50011E171 /* LaunchScreen.storyboard */; };
+		38EB505F25C5FCDE00513F66 /* CalculatorViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EB505E25C5FCDE00513F66 /* CalculatorViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		380BCF7125BF0BC50011E171 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		380BCF7425BF0BC50011E171 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		380BCF7625BF0BC50011E171 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		38EB505E25C5FCDE00513F66 /* CalculatorViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CalculatorViewCell.swift; path = ../../../CalculatorViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				380BCF6825BF0BC30011E171 /* AppDelegate.swift */,
 				380BCF6A25BF0BC30011E171 /* SceneDelegate.swift */,
 				380BCF6C25BF0BC30011E171 /* ViewController.swift */,
+				38EB505E25C5FCDE00513F66 /* CalculatorViewCell.swift */,
 				380BCF6E25BF0BC30011E171 /* Main.storyboard */,
 				380BCF7125BF0BC50011E171 /* Assets.xcassets */,
 				380BCF7325BF0BC50011E171 /* LaunchScreen.storyboard */,
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38EB505F25C5FCDE00513F66 /* CalculatorViewCell.swift in Sources */,
 				380BCF6D25BF0BC30011E171 /* ViewController.swift in Sources */,
 				380BCF6925BF0BC30011E171 /* AppDelegate.swift in Sources */,
 				380BCF6B25BF0BC30011E171 /* SceneDelegate.swift in Sources */,
